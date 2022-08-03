@@ -1,14 +1,29 @@
+import {
+    Box,
+    chakra,
+    Container,
+    Stack,
+    Text,
+    useColorModeValue,
+    VisuallyHidden,
+    useColorMode
+} from '@chakra-ui/react';
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { ReactNode } from 'react';
 
-<svg
-version="1.0"
-xmlns="http://www.w3.org/2000/svg"
-height="32"
-viewBox="0 0 512.000000 512.000000"
-preserveAspectRatio="xMidYMid meet">
+const Logo = (props: any) => {
+    const logoColor = useColorModeValue('#000000', '#ffffff')
+    return (
+        <svg
+            version="1.0"
+            xmlns="http://www.w3.org/2000/svg"
+            height="32"
+            viewBox="0 0 512.000000 512.000000"
+            preserveAspectRatio="xMidYMid meet">
 
-<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M2345 5004 c-69 -6 -197 -25 -270 -40 -68 -14 -102 -22 -175 -43 -19
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                fill={logoColor} stroke="none">
+                <path d="M2345 5004 c-69 -6 -197 -25 -270 -40 -68 -14 -102 -22 -175 -43 -19
 -5 -51 -14 -70 -19 -142 -39 -419 -164 -477 -215 -28 -24 -33 -36 -33 -71 1
 -22 6 -50 13 -62 20 -34 1174 -1569 1189 -1581 38 -31 109 -23 145 15 113 119
 191 201 313 332 80 85 177 189 215 230 83 88 201 214 300 320 124 131 228 242
@@ -22,7 +37,7 @@ fill="#000000" stroke="none">
 -105 -119 -352 -370 -362 -368 -14 4 -1004 1322 -1004 1337 0 11 136 81 158
 81 7 0 20 4 30 10 22 12 123 44 187 60 28 6 59 16 70 20 11 5 38 11 60 15 22
 3 69 10 105 16 169 26 596 31 658 8z"/>
-<path d="M875 4326 c-58 -26 -238 -231 -353 -403 -208 -310 -324 -610 -394
+                <path d="M875 4326 c-58 -26 -238 -231 -353 -403 -208 -310 -324 -610 -394
 -1023 -17 -102 -17 -580 0 -675 7 -38 18 -97 24 -130 45 -249 145 -517 279
 -751 355 -618 984 -1069 1664 -1192 33 -6 92 -17 130 -24 94 -17 577 -18 663
 0 34 6 90 17 125 23 126 24 311 75 359 100 22 12 48 61 48 91 0 13 -235 492
@@ -42,7 +57,7 @@ fill="#000000" stroke="none">
 80 21 88 59 202 96 288 8 17 21 49 30 70 20 47 45 97 72 145 12 20 31 54 43
 74 11 20 39 63 62 96 23 33 49 70 57 82 17 25 60 80 104 132 17 20 36 33 46
 31 10 -2 141 -167 291 -367z"/>
-<path d="M4287 4088 c-29 -29 -118 -123 -197 -208 -228 -244 -270 -288 -355
+                <path d="M4287 4088 c-29 -29 -118 -123 -197 -208 -228 -244 -270 -288 -355
 -380 -45 -47 -112 -119 -150 -160 -39 -41 -77 -82 -85 -90 -29 -30 -361 -384
 -520 -555 -36 -38 -72 -76 -80 -85 -38 -37 -60 -75 -60 -104 0 -21 157 -345
 481 -994 516 -1032 493 -992 569 -992 52 0 202 113 379 284 267 260 465 564
@@ -61,5 +76,71 @@ fill="#000000" stroke="none">
 19 83 91 150 160 66 69 134 141 150 160 15 19 83 91 150 160 66 69 134 141
 150 160 16 19 85 94 155 166 69 72 150 159 179 192 29 34 57 62 62 62 6 0 25
 -21 45 -47z"/>
-</g>
-</svg>
+            </g>
+        </svg>
+
+
+    );
+};
+
+const SocialButton = ({
+    children,
+    label,
+    href,
+}: {
+    children: ReactNode;
+    label: string;
+    href: string;
+}) => {
+    return (
+        <chakra.button
+            bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+            rounded={'full'}
+            w={8}
+            h={8}
+            cursor={'pointer'}
+            as={'a'}
+            href={href}
+            display={'inline-flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            transition={'background 0.3s ease'}
+            _hover={{
+                bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+            }}>
+            <VisuallyHidden>{label}</VisuallyHidden>
+            {children}
+        </chakra.button>
+    );
+};
+
+export default function Footer() {
+    return (
+        <Box
+            bg={useColorModeValue('gray.50', 'gray.900')}
+            color={useColorModeValue('gray.700', 'gray.200')}>
+            <Container
+                as={Stack}
+                maxW={'6xl'}
+                py={4}
+                direction={{ base: 'column', md: 'row' }}
+                spacing={4}
+                justify={{ base: 'center', md: 'space-between' }}
+                align={{ base: 'center', md: 'center' }}>
+                <Logo />
+                <Text>© 2022 DiveeUp. All rights reserved</Text>
+                <Stack direction={'row'} spacing={6}>
+                    <SocialButton label={'Twitter'} href={'#'}>
+                        <FaTwitter />
+                    </SocialButton>
+                    <SocialButton label={'YouTube'} href={'#'}>
+                        <FaYoutube />
+                    </SocialButton>
+                    <SocialButton label={'Instagram'} href={'#'}>
+                        <FaInstagram />
+                    </SocialButton>
+                </Stack>
+            </Container>
+        </Box>
+    );
+}
