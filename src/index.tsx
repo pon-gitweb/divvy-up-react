@@ -1,7 +1,11 @@
 import { ColorModeScript } from "@chakra-ui/react"
 import * as React from "react"
 import * as ReactDOM from "react-dom/client"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { App } from "./App"
+import { Home } from "./components/Home"
+import { NotFound } from "./components/NotFound"
+import { OrderSummary } from "./components/OrderSummary"
 import reportWebVitals from "./services/reportWebVitals"
 import * as serviceWorker from "./services/serviceWorker"
 
@@ -13,7 +17,15 @@ const root = ReactDOM.createRoot(container)
 root.render(
   <React.StrictMode>
     <ColorModeScript />
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
+          <Route path=":orderId" element={<OrderSummary />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
 )
 

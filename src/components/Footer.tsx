@@ -6,7 +6,6 @@ import {
     Text,
     useColorModeValue,
     VisuallyHidden,
-    useColorMode
 } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { ReactNode } from 'react';
