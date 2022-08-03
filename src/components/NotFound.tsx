@@ -10,7 +10,7 @@ export const NotFound = () => {
             <Heading>
                 Oh dear... you seem to be lost
             </Heading>
-            <Button onClick={() => { navigate('/') }}>
+            <Button onClick={() => { navigate('/divvy-up') }}>
                 Un-lose yaself
             </Button>
         </VStack>
