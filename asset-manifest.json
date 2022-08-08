@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/divvy-up/static/js/main.36f63212.js",
+    "main.js": "/divvy-up/static/js/main.8fbb3f50.js",
     "static/js/377.f7b8500d.chunk.js": "/divvy-up/static/js/377.f7b8500d.chunk.js",
     "index.html": "/divvy-up/index.html",
-    "main.36f63212.js.map": "/divvy-up/static/js/main.36f63212.js.map",
+    "main.8fbb3f50.js.map": "/divvy-up/static/js/main.8fbb3f50.js.map",
     "377.f7b8500d.chunk.js.map": "/divvy-up/static/js/377.f7b8500d.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.36f63212.js"
+    "static/js/main.8fbb3f50.js"
   ]
 }
