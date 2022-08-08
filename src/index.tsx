@@ -19,11 +19,11 @@ root.render(
     <ColorModeScript />
     <HashRouter>
       <Routes>
-        <Route path="/divvy-up" element={<App />}>
+        <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path=":orderId" element={<OrderSummary />} />
-          <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
   </React.StrictMode>
