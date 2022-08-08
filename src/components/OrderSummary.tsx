@@ -1,4 +1,4 @@
-import { Center, Heading, Spinner, VStack, Text, Button } from '@chakra-ui/react';
+import { Center, Heading, Spinner, VStack, Button } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import OrderItem from "./OrderItem";
 import { useParams } from 'react-router-dom';
