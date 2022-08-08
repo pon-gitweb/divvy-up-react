@@ -92,7 +92,7 @@ function FetchApiData(
     settimedOut: React.Dispatch<React.SetStateAction<boolean>>,
     orderId: string | undefined) {
 
-    fetch(`http://localhost:5000/order/${orderId}`)
+    fetch(`https://divvee-up.herokuapp.com/order/${orderId}`)
         .then(res => res.json())
         .then(res => {
             setApiData(res);
