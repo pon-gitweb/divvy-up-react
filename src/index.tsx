@@ -1,7 +1,7 @@
 import { ColorModeScript } from "@chakra-ui/react"
 import * as React from "react"
 import * as ReactDOM from "react-dom/client"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { HashRouter, Route, Routes } from "react-router-dom"
 import { App } from "./App"
 import { Home } from "./components/Home"
 import { NotFound } from "./components/NotFound"
@@ -17,16 +17,16 @@ const root = ReactDOM.createRoot(container)
 root.render(
   <React.StrictMode>
     <ColorModeScript />
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
-        <Route path="/" element={<App />}>
+        <Route path="/divvy-up" element={<App />}>
           <Route index element={<Home />} />
           <Route path=":orderId" element={<OrderSummary />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </BrowserRouter>
-  </React.StrictMode>,
+    </HashRouter>
+  </React.StrictMode>
 )
 
 // If you want your app to work offline and load faster, you can change
