@@ -1,58 +1,104 @@
-import { Heading, VStack, Text, Button } from '@chakra-ui/react';
-import React from 'react'
+import { Center, Heading, Spinner, VStack, Text, Button } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react'
 import OrderItem from "./OrderItem";
-import orderData from "../models/orders.json";
 import { useParams } from 'react-router-dom';
-import { NotFound } from './NotFound';
+import { NoData } from './NoData';
+
+const LoadingAnimation = <Center>
+    <Spinner
+        thickness='4px'
+        speed='0.65s'
+        emptyColor='gray.200'
+        color='blue.500'
+        size='xl' />
+</Center>;
+
+type Order = {
+    _id: string,
+    paid: boolean,
+    business: string,
+    date: string,
+    orderItems: OItem[]
+}
+type OItem = {
+    itemName: string,
+    itemCost: number,
+    itemQuantity: number
+}
 
 export const OrderSummary = () => {
-    let params = useParams()
 
-    let order = {
+    let order: Order = {
         _id: "",
-        paid: true,
-        restaurant: "",
-        orderItems: [
-            {
-                name: "",
-                cost: 0,
-                quantity: 0
-            }
-        ]
+        paid: false,
+        business: "",
+        date: "",
+        orderItems: []
     }
 
-    for (let index = 0; index < orderData.length; index++) {
-        const element = orderData[index];
-        if (element._id === params.orderId) {
-            order = element
-            break
+    const [dataLoaded, setDataLoaded] = useState(false)
+    const [timedOut, settimedOut] = useState(false)
+    const [apiData, setApiData] = useState(order)
+
+    let { orderId } = useParams()
+
+    useEffect(() => {
+        FetchApiData(setApiData, setDataLoaded, settimedOut, orderId);
+        const timer = setTimeout(() => {
+            if (!dataLoaded) {
+                settimedOut(true)
+            }
+        }, 5000)
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [dataLoaded, orderId])
+
+
+    if (!timedOut) {
+        return (LoadingAnimation)
+    }
+    else {
+        if (!dataLoaded) {
+            return (<NoData />)
+        }
+        else {
+
+            let total = 0
+            for (let index = 0; index < apiData.orderItems.length; index++) {
+                const element = apiData.orderItems[index];
+                total += element.itemCost
+            }
+
+            return (
+                <VStack spacing={8}>
+                    <Heading>{apiData.business}</Heading>
+                    <VStack spacing={4}>
+                        {apiData.orderItems.map((order) => <OrderItem key={order.itemName} order={order} />)}
+                    </VStack>
+                    <Heading size={'md'}>Total: ${total.toFixed(2)}</Heading>
+                    <Button size={'lg'}>
+                        Pay Now
+                    </Button>
+                </VStack>
+            )
         }
     }
-
-    if (order._id === "") {
-        return <NotFound />
-    }
-
-
-    let total = 0
-    order.orderItems.forEach(element => {
-        total += element.cost
-    });
-
-    return (
-        <VStack>
-            <Heading>
-                {order.restaurant}
-            </Heading>
-            {order.orderItems.map((item) => <OrderItem key={item.name} order={item} />)}
-            <Text fontWeight={'bold'}>
-                Total: ${total.toFixed(2)}
-            </Text>
-            <Button
-                onClick={() => { console.log('Clicked!') }}
-            >
-                Pay Now
-            </Button>
-        </VStack>
-    )
 }
+
+function FetchApiData(
+    setApiData: React.Dispatch<React.SetStateAction<Order>>,
+    setDataLoaded: React.Dispatch<React.SetStateAction<boolean>>,
+    settimedOut: React.Dispatch<React.SetStateAction<boolean>>,
+    orderId: string | undefined) {
+
+    fetch(`http://localhost:5000/order/${orderId}`)
+        .then(res => res.json())
+        .then(res => {
+            setApiData(res);
+            setDataLoaded(true);
+            settimedOut(true);
+        })
+        .catch(err => err);
+}
+
