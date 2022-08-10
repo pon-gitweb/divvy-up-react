@@ -15,25 +15,23 @@ const LoadingAnimation = <Center>
 
 type Order = {
     _id: string,
-    paid: boolean,
     business: string,
     date: string,
-    orderItems: OItem[]
+    items: OItem[]
 }
 type OItem = {
-    itemName: string,
-    itemCost: number,
-    itemQuantity: number
+    name: string,
+    cost: number,
+    quantity: number
 }
 
 export const OrderSummary = () => {
 
     let order: Order = {
         _id: "",
-        paid: false,
         business: "",
         date: "",
-        orderItems: []
+        items: []
     }
 
     const [dataLoaded, setDataLoaded] = useState(false)
@@ -63,18 +61,17 @@ export const OrderSummary = () => {
             return (<NoData />)
         }
         else {
-
             let total = 0
-            for (let index = 0; index < apiData.orderItems.length; index++) {
-                const element = apiData.orderItems[index];
-                total += element.itemCost
+            for (let index = 0; index < apiData.items.length; index++) {
+                const element = apiData.items[index];
+                total += element.cost
             }
 
             return (
                 <VStack spacing={8}>
                     <Heading>{apiData.business}</Heading>
                     <VStack spacing={4}>
-                        {apiData.orderItems.map((order) => <OrderItem key={order.itemName} order={order} />)}
+                        {apiData.items.map((order) => <OrderItem key={order.name} order={order} />)}
                     </VStack>
                     <Heading size={'md'}>Total: ${total.toFixed(2)}</Heading>
                     <Button size={'lg'}>
