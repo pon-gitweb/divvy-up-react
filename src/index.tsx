@@ -6,6 +6,7 @@ import { App } from "./App"
 import { Home } from "./components/Home"
 import { NotFound } from "./components/NotFound"
 import { OrderSummary } from "./components/OrderSummary"
+import { PaymentPortal } from "./components/PaymentPortal"
 import reportWebVitals from "./services/reportWebVitals"
 import * as serviceWorker from "./services/serviceWorker"
 
@@ -22,6 +23,7 @@ root.render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path=":orderId" element={<OrderSummary />} />
+          <Route path="payment" element={<PaymentPortal />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

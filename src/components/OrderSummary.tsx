@@ -1,7 +1,7 @@
 import { Center, Heading, Spinner, VStack, Button } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import OrderItem from "./OrderItem";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { NoData } from './NoData';
 
 const LoadingAnimation = <Center>
@@ -26,6 +26,8 @@ type OItem = {
 }
 
 export const OrderSummary = () => {
+
+    let navigate = useNavigate();
 
     let order: Order = {
         _id: "",
@@ -74,7 +76,7 @@ export const OrderSummary = () => {
                         {apiData.items.map((order) => <OrderItem key={order.name} order={order} />)}
                     </VStack>
                     <Heading size={'md'}>Total: ${total.toFixed(2)}</Heading>
-                    <Button size={'lg'}>
+                    <Button size={'lg'} onClick={() => navigate(`/payment`, { state: { totalBill: total } })}>
                         Pay Now
                     </Button>
                 </VStack>
@@ -88,7 +90,6 @@ function FetchApiData(
     setDataLoaded: React.Dispatch<React.SetStateAction<boolean>>,
     settimedOut: React.Dispatch<React.SetStateAction<boolean>>,
     orderId: string | undefined) {
-
     fetch(`https://divvee-up.herokuapp.com/order/${orderId}`)
         .then(res => res.json())
         .then(res => {
